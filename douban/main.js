@@ -1,20 +1,18 @@
 // ==UserScript==
 // @name         btdouban
-// @namespace    http://tampermonkey.net/
-// @version      0.1
-// @description  [!!!Ensure your network is under VPN] Gets Douban medias' BitTorrent resources
-// @author       shadow-walker
-// @match        http://*/*
+// @version      0.0.1
+// @description  [Caution: Ensure using VPN] Gets Douban medias' BitTorrent resources
+// @namespace    https://github.com/caryyu/bteye
+// @author       caryyu
+// @match        *://movie.douban.com/subject/*
 // @grant        GM_xmlhttpRequest
-// @grant        GM_openInTab
-// @grant        GM_download
-// @connect      *
-// @include        *//movie.douban.com/subject/*
+// @connect      btdb.eu
+// @connect      kat.rip
+// @include      *//movie.douban.com/subject/*
 // ==/UserScript==
 
 (function () {
   'use strict';
-
   var configs = [{
     enabled: true,
     weight: 2,
@@ -93,6 +91,7 @@
       GM_xmlhttpRequest({
         method: 'GET',
         url: url,
+        timeout: 10000,
         onabort: function (data) {
           reject(data)
         },
@@ -103,7 +102,11 @@
           reject(data)
         },
         onload: function (data) {
-          resolve(data)
+          if (data.status === 200) {
+            resolve(data)
+          } else {
+            reject(data)
+          }
         }
       })
     })
@@ -126,13 +129,16 @@
       url = encodeURI(url)
       var data = await doRequest(url).catch(function (error) {
         console.log(error)
+        var layer = $(`<div class="clearfix" style="float: left; width: 675px"><hr/><p>Seems like you're not using VPN</p></div>`)
+        $('.article .subjectwrap:first').append(layer)
       })
+
+      if (!data) continue
 
       c.uiRef(c, data)
 
       if (c.has(data)) break
     }
   }
-
   Promise.each(configs)
 })();
