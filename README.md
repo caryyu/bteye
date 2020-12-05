@@ -4,6 +4,8 @@ This project is a tampermonkey-based plugin that aims to aggregate the internet 
 
 > Welcome leave your feedback on the Github issue area
 
+![IMG](poster.png)
+
 # Copyright Claim
 
 This project is only for studying, Any copyright violation is obliged under you control, please take serious use, thanks.
