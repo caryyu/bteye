@@ -9,6 +9,8 @@
 // @connect      btdb.eu
 // @connect      kat.rip
 // @include      *//movie.douban.com/subject/*
+// @require      https://github.com/webtorrent/webtorrent/raw/master/webtorrent.min.js
+// @require      https://github.com/DIYgod/DPlayer/raw/master/dist/DPlayer.min.js
 // ==/UserScript==
 
 (function () {
@@ -139,6 +141,25 @@
 
       if (c.has(data)) break
     }
+    
   }
+
+  var playEl = $(`<a href="javascript:void(0)">Play-Test[WebTorrent]</a>`)
+  playEl.click(function() {
+    const dp = new DPlayer({
+      container: document.getElementById('dplayer'),
+      video: {
+        url: 'magnet:?xt=urn:btih:6a9759bffd5c0af65319979fb7832189f4f3c35d&dn=sintel.mp4&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337&tr=udp%3A%2F%2Fexplodie.org%3A6969&tr=udp%3A%2F%2Ftracker.empire-js.us%3A1337&tr=wss%3A%2F%2Ftracker.btorrent.xyz&tr=wss%3A%2F%2Ftracker.openwebtorrent.com&ws=https%3A%2F%2Fwebtorrent.io%2Ftorrents%2Fsintel-1024-surround.mp4',
+        type: 'webtorrent',
+      }
+    })
+    console.log(dp.plugins.webtorrent)
+  })
+  var footEl = $(`<div class="clearfix" style="float: left; width: 675px"><hr/><div id="dplayer"></div></div>`)
+  footEl.append(playEl)
+  $('.article .subjectwrap:first').append(footEl)
+
   Promise.each(configs)
 })();
+
+
