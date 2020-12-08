@@ -144,20 +144,56 @@
     
   }
 
-  var playEl = $(`<a href="javascript:void(0)">Play-Test[WebTorrent]</a>`)
-  playEl.click(function() {
-    const dp = new DPlayer({
-      container: document.getElementById('dplayer'),
+  $('head').append(`
+    <style type="text/css">
+      #layer-background{ 
+          display: none;  
+          position: fixed;  
+          top: 0%;  left: 0%;  
+          width: 100%;  height: 100%;  
+          background-color: black;  
+          z-index:1001;  -moz-opacity: 0.7;  opacity:.70;  filter: alpha(opacity=70);
+      }
+      #layer-dplayer {
+          display: none;  
+          position: fixed;  
+          top: 25%;  left: 22%;  
+          width: 53%;  height: 49%;  
+          padding: 0px;  
+          border: 5px solid #E8E9F7;  
+          background-color: white;  
+          z-index:1002; 
+          overflow: auto;
+      }
+    </style>
+  `)
+
+  var dp;
+  var layerBackgroundEl = $('<div id="layer-background"></div>')
+  layerBackgroundEl.click(function () {
+    $('#layer-background').hide()
+    $('#layer-dplayer').hide()
+    if(dp) dp.destroy()
+  })
+  $('body').append(layerBackgroundEl)
+  $('body').append('<div id="layer-dplayer"></div>')
+
+  var play = function() {
+    $('#layer-background').show()
+    $('#layer-dplayer').show()
+
+    dp = new DPlayer({
+      container: document.getElementById('layer-dplayer'),
       video: {
-        url: 'magnet:?xt=urn:btih:6a9759bffd5c0af65319979fb7832189f4f3c35d&dn=sintel.mp4&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337&tr=udp%3A%2F%2Fexplodie.org%3A6969&tr=udp%3A%2F%2Ftracker.empire-js.us%3A1337&tr=wss%3A%2F%2Ftracker.btorrent.xyz&tr=wss%3A%2F%2Ftracker.openwebtorrent.com&ws=https%3A%2F%2Fwebtorrent.io%2Ftorrents%2Fsintel-1024-surround.mp4',
+        url: $(this).attr('link'),
         type: 'webtorrent',
       }
     })
     console.log(dp.plugins.webtorrent)
-  })
-  var footEl = $(`<div class="clearfix" style="float: left; width: 675px"><hr/><div id="dplayer"></div></div>`)
-  footEl.append(playEl)
-  $('.article .subjectwrap:first').append(footEl)
+  }
+
+  var playTestEl = $(`<a href="javascript:void(0)" link="magnet:?xt=urn:btih:6a9759bffd5c0af65319979fb7832189f4f3c35d&dn=sintel.mp4&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337&tr=udp%3A%2F%2Fexplodie.org%3A6969&tr=udp%3A%2F%2Ftracker.empire-js.us%3A1337&tr=wss%3A%2F%2Ftracker.btorrent.xyz&tr=wss%3A%2F%2Ftracker.openwebtorrent.com&ws=https%3A%2F%2Fwebtorrent.io%2Ftorrents%2Fsintel-1024-surround.mp4">Play-Test[WebTorrent]</a>`).click(play)
+  $('.article .subjectwrap:first').append($(`<div class="clearfix" style="float: left; width: 675px"><hr/></div>`).append(playTestEl))
 
   Promise.each(configs)
 })();
