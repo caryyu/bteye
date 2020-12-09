@@ -11,7 +11,7 @@
 // @include      *//movie.douban.com/subject/*
 // @require      https://github.com/webtorrent/webtorrent/raw/master/webtorrent.min.js
 // @require      https://github.com/DIYgod/DPlayer/raw/master/dist/DPlayer.min.js
-// @require      file:///Users/caryyu/Desktop/bteye/douban/playermanager.js
+// @require      https://github.com/caryyu/bteye/raw/master/douban/playermanager.js
 // ==/UserScript==
 
 (function () {
@@ -144,7 +144,6 @@
 
     new PlayerManager().uiApply()
   }
-
 
   Promise.main(configs)
 })();
