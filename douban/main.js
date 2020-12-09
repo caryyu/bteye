@@ -11,10 +11,12 @@
 // @include      *//movie.douban.com/subject/*
 // @require      https://github.com/webtorrent/webtorrent/raw/master/webtorrent.min.js
 // @require      https://github.com/DIYgod/DPlayer/raw/master/dist/DPlayer.min.js
+// @require      file:///Users/caryyu/Desktop/bteye/douban/playermanager.js
 // ==/UserScript==
 
 (function () {
   'use strict';
+
   var configs = [{
     enabled: true,
     weight: 2,
@@ -25,8 +27,7 @@
       var medias = $(html).find('.media')
       medias.each(function () {
         let {title, size, sd, dn, link} = self.fieldRef(this)
-        //items += `<li><a href="${link}">${title}</a><span style="float: right">sd: ${sd}, dn: ${dn}, ${size}</span></li>`
-        items += `<li><a href="${link}">${title} (sd: ${sd}, dn: ${dn}, ${size})</a></li>`
+        items += `<li id="bt-item"><a href="${link}">${title} (sd: ${sd}, dn: ${dn}, ${size})</a></li>`
       })
       items = items.length > 0 ? items : '[btdb.eu] No any magnet links can be found!'
       var layer = $(`<div class="clearfix" style="float: left; width: 675px"><hr/><ul>${items}</ul></div>`)
@@ -57,8 +58,7 @@
       var medias = $(html).find('.mainpart .data .even, .odd')
       medias.each(function () {
         let {title, size, sd, dn, link} = self.fieldRef(this)
-        //items += `<li><a href="${link}">${title}</a><span style="float: right">sd: ${sd}, dn: ${dn}, ${size}</span></li>`
-        items += `<li><a href="${link}">${title} (sd: ${sd}, dn: ${dn}, ${size})</a></li>`
+        items += `<li id="bt-item"><a href="${link}">${title} (sd: ${sd}, dn: ${dn}, ${size})</a></li>`
       })
       items = items.length > 0 ? items : '[kat.rip] No any magnet links can be found!'
       var layer = $(`<div class="clearfix" style="float: left; width: 675px"><hr/><ul>${items}</ul></div>`)
@@ -114,7 +114,7 @@
     })
   }
 
-  Promise.each = async function (configs) {
+  Promise.main = async function (configs) {
     configs.sort(function (a, b) {
       return a.weight - b.weight
     })
@@ -141,61 +141,12 @@
 
       if (c.has(data)) break
     }
-    
+
+    new PlayerManager().uiApply()
   }
 
-  $('head').append(`
-    <style type="text/css">
-      #layer-background{ 
-          display: none;  
-          position: fixed;  
-          top: 0%;  left: 0%;  
-          width: 100%;  height: 100%;  
-          background-color: black;  
-          z-index:1001;  -moz-opacity: 0.7;  opacity:.70;  filter: alpha(opacity=70);
-      }
-      #layer-dplayer {
-          display: none;  
-          position: fixed;  
-          top: 25%;  left: 22%;  
-          width: 53%;  height: 49%;  
-          padding: 0px;  
-          border: 5px solid #E8E9F7;  
-          background-color: white;  
-          z-index:1002; 
-          overflow: auto;
-      }
-    </style>
-  `)
 
-  var dp;
-  var layerBackgroundEl = $('<div id="layer-background"></div>')
-  layerBackgroundEl.click(function () {
-    $('#layer-background').hide()
-    $('#layer-dplayer').hide()
-    if(dp) dp.destroy()
-  })
-  $('body').append(layerBackgroundEl)
-  $('body').append('<div id="layer-dplayer"></div>')
-
-  var play = function() {
-    $('#layer-background').show()
-    $('#layer-dplayer').show()
-
-    dp = new DPlayer({
-      container: document.getElementById('layer-dplayer'),
-      video: {
-        url: $(this).attr('link'),
-        type: 'webtorrent',
-      }
-    })
-    console.log(dp.plugins.webtorrent)
-  }
-
-  var playTestEl = $(`<a href="javascript:void(0)" link="magnet:?xt=urn:btih:6a9759bffd5c0af65319979fb7832189f4f3c35d&dn=sintel.mp4&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337&tr=udp%3A%2F%2Fexplodie.org%3A6969&tr=udp%3A%2F%2Ftracker.empire-js.us%3A1337&tr=wss%3A%2F%2Ftracker.btorrent.xyz&tr=wss%3A%2F%2Ftracker.openwebtorrent.com&ws=https%3A%2F%2Fwebtorrent.io%2Ftorrents%2Fsintel-1024-surround.mp4">Play-Test[WebTorrent]</a>`).click(play)
-  $('.article .subjectwrap:first').append($(`<div class="clearfix" style="float: left; width: 675px"><hr/></div>`).append(playTestEl))
-
-  Promise.each(configs)
+  Promise.main(configs)
 })();
 
 
