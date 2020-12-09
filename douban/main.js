@@ -26,8 +26,8 @@
       var items = ''
       var medias = $(html).find('.media')
       medias.each(function () {
-        let {title, size, sd, dn, link} = self.fieldRef(this)
-        items += `<li id="bt-item"><a href="${link}">${title} (sd: ${sd}, dn: ${dn}, ${size})</a></li>`
+        let {title, size, sd, lc, link} = self.fieldRef(this)
+        items += `<li><a href="javascript:void(0)" id="bt-item" link="${link}">[Play]</a> <a href="${link}">${title} (sd: ${sd}, lc: ${lc}, ${size})</a></li>`
       })
       items = items.length > 0 ? items : '[btdb.eu] No any magnet links can be found!'
       var layer = $(`<div class="clearfix" style="float: left; width: 675px"><hr/><ul>${items}</ul></div>`)
@@ -45,8 +45,8 @@
       var link = $(html).find('.media-right a:first').attr('href')
       var size = /Size\s:\s(.+)/g.exec($(info[0]).text())[1]
       var sd = /Seeders\s:\s(\d*)/g.exec($(info[2]).text())[1]
-      var dn = /Leechers\s:\s(\d*)/g.exec($(info[3]).text())[1]
-      return {title: title, link: link, sd: sd, dn: dn, size: size}
+      var lc = /Leechers\s:\s(\d*)/g.exec($(info[3]).text())[1]
+      return {title: title, link: link, sd: sd, lc: lc, size: size}
     }
   }, {
     enabled: true,
@@ -57,8 +57,8 @@
       var items = ''
       var medias = $(html).find('.mainpart .data .even, .odd')
       medias.each(function () {
-        let {title, size, sd, dn, link} = self.fieldRef(this)
-        items += `<li id="bt-item"><a href="${link}">${title} (sd: ${sd}, dn: ${dn}, ${size})</a></li>`
+        let {title, size, sd, lc, link} = self.fieldRef(this)
+        items += `<li id="bt-item"><a href="javascript:void(0)" id="bt-item" link="${link}">[Play]</a> <a href="${link}">${title} (sd: ${sd}, lc: ${lc}, ${size})</a></li>`
       })
       items = items.length > 0 ? items : '[kat.rip] No any magnet links can be found!'
       var layer = $(`<div class="clearfix" style="float: left; width: 675px"><hr/><ul>${items}</ul></div>`)
@@ -76,8 +76,8 @@
       var link = tds.find('.floatright a:last').attr('href')
       var size = $(tds[1]).text()
       var sd = $(tds[4]).text()
-      var dn = $(tds[5]).text()
-      return {title: title, link: link, sd: sd, dn: dn, size: size}
+      var lc = $(tds[5]).text()
+      return {title: title, link: link, sd: sd, lc: lc, size: size}
     }
   }]
 
@@ -148,5 +148,4 @@
 
   Promise.main(configs)
 })();
-
 
