@@ -27,10 +27,10 @@
       var medias = $(html).find('.media')
       medias.each(function () {
         let {title, size, sd, lc, link} = self.fieldRef(this)
-        items += `<li><a href="javascript:void(0)" id="bt-item" link="${link}">[Play]</a> <a href="${link}">${title} (sd: ${sd}, lc: ${lc}, ${size})</a></li>`
+        items += `<li><a href="javascript:void(0)" link="${link}">[Play]</a> <a href="${link}">${title} (sd: ${sd}, lc: ${lc}, ${size})</a></li>`
       })
       items = items.length > 0 ? items : '[btdb.eu] No any magnet links can be found!'
-      var layer = $(`<div class="clearfix" style="float: left; width: 675px"><hr/><ul>${items}</ul></div>`)
+      var layer = $(`<div class="clearfix magnet-section" style="float: left; width: 675px"><hr/><ul>${items}</ul></div>`)
       $('.article .subjectwrap:first').append(layer)
     },
     has: function (data) {
@@ -58,10 +58,10 @@
       var medias = $(html).find('.mainpart .data .even, .odd')
       medias.each(function () {
         let {title, size, sd, lc, link} = self.fieldRef(this)
-        items += `<li id="bt-item"><a href="javascript:void(0)" id="bt-item" link="${link}">[Play]</a> <a href="${link}">${title} (sd: ${sd}, lc: ${lc}, ${size})</a></li>`
+        items += `<li><a href="javascript:void(0)" link="${link}">[Play]</a> <a href="${link}">${title} (sd: ${sd}, lc: ${lc}, ${size})</a></li>`
       })
       items = items.length > 0 ? items : '[kat.rip] No any magnet links can be found!'
-      var layer = $(`<div class="clearfix" style="float: left; width: 675px"><hr/><ul>${items}</ul></div>`)
+      var layer = $(`<div class="clearfix magnet-section" style="float: left; width: 675px"><hr/><ul>${items}</ul></div>`)
       $('.article .subjectwrap:first').append(layer)
     },
     has: function (data) {
