@@ -8,6 +8,7 @@
 // @grant        GM_xmlhttpRequest
 // @connect      btdb.eu
 // @connect      kat.rip
+// @connect      herokuapp.com
 // @include      *//movie.douban.com/subject/*
 // @require      https://github.com/webtorrent/webtorrent/raw/master/webtorrent.min.js
 // @require      https://github.com/DIYgod/DPlayer/raw/master/dist/DPlayer.min.js
@@ -19,8 +20,14 @@
 
   var configs = [{
     enabled: true,
-    weight: 2,
+    weight: 300,
     src: 'https://btdb.eu/search/__keyword__/0/',
+    getKeyword: function () {
+      var txt = $('h1 span:eq(0)').text()
+      //txt = txt.replace(/^[^a-zA-Z]*/, "")
+      txt = txt.replace(/Season\s/, "S")
+      return txt
+    }, 
     uiRef: function (self, data) {
       var html = $.parseHTML(data.responseText);
       var items = ''
@@ -50,8 +57,14 @@
     }
   }, {
     enabled: true,
-    weight: 1,
+    weight: 200,
     src: 'http://kat.rip/usearch/__keyword__/',
+    getKeyword: function () {
+      var txt = $('h1 span:eq(0)').text()
+      //txt = txt.replace(/^[^a-zA-Z]*/, "")
+      txt = txt.replace(/Season\s/, "S")
+      return txt
+    }, 
     uiRef: function (self, data) {
       var html = $.parseHTML(data.responseText);
       var items = ''
@@ -79,14 +92,46 @@
       var lc = $(tds[5]).text()
       return {title: title, link: link, sd: sd, lc: lc, size: size}
     }
+  }, {
+    enabled: true,
+    weight: 100,
+    src: 'https://thepiratebay-caryyu.herokuapp.com/search/__keyword__',
+    getKeyword: function () {
+      var txt = $('h1 span:eq(0)').text()
+      txt = txt.replace(/^[^a-zA-Z]*/, "")
+      txt = txt.replace(/Season\s/, "S")
+      return txt
+    }, 
+    uiRef: function (self, data) {
+      var items = ''
+      var sizePretty = function(size) {
+        if(size < 1024) {
+          return Math.ceil(size) + 'M'
+        }
+        return (size / 1024) + 'G'
+      }
+      var medias = JSON.parse(data.responseText)
+      medias.forEach(function (media) {
+        let {title, size, sd, lc, link} = self.fieldRef(media)
+        items += `<li><a href="javascript:void(0)" link="${link}">[Play]</a> <a href="${link}">${title} (sd: ${sd}, lc: ${lc}, ${sizePretty(size)})</a></li>`
+      })
+      items = items.length > 0 ? items : '[herokuapp.com] No any magnet links can be found!'
+      var layer = $(`<div class="clearfix magnet-section" style="float: left; width: 675px"><hr/><ul>${items}</ul></div>`)
+      $('.article .subjectwrap:first').append(layer)
+    },
+    has: function (data) {
+      var medias = JSON.parse(data.responseText)
+      return medias.length > 0
+    },
+    fieldRef: function (obj) {
+      var title = obj.title
+      var link = obj.magnet
+      var size = obj.size / 1024 / 1024 // M
+      var sd = obj.seeds
+      var lc = obj.leeches
+      return {title: title, link: link, sd: sd, lc: lc, size: size}
+    }
   }]
-
-  var getKeyword = function () {
-    var txt = $('h1 span:eq(0)').text()
-    //txt = txt.replace(/^[^a-zA-Z]*/, "")
-    txt = txt.replace(/Season\s/, "S")
-    return txt
-  }
 
   var doRequest = function (url) {
     return new Promise(function (resolve, reject) {
@@ -119,12 +164,12 @@
       return a.weight - b.weight
     })
 
-    var keyword = getKeyword()
-    console.log('[btdouban] keyword: ', keyword)
-
     for (var i = 0; i < configs.length; i++) {
       var c = configs[i]
       if (!c.enabled) continue
+
+      var keyword = c.getKeyword()
+      if (keyword.length <= 0) continue
 
       var url = c.src.replace('__keyword__', keyword)
 
