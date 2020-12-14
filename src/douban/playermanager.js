@@ -19,7 +19,7 @@ PlayerManager = function () {
            top: 25%;  left: 22%;
            width: 53%;  height: 49%;
            padding: 0px;
-           border: 5px solid #E8E9F7;
+           border: 0px solid #E8E9F7;
            background-color: white;
            z-index:1002;
            overflow: auto;
