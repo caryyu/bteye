@@ -74,7 +74,7 @@ PlayerManager.prototype = {
       container: document.getElementById('layer-dplayer'),
       video: {
         url: link,
-        type: 'webtorrent',
+        type: 'webtorrent'
       },
       pluginOptions: {
         webtorrent: {
@@ -118,4 +118,5 @@ PlayerManager.prototype = {
   }
 }
 
+window.WebTorrent = WebTorrent
 module.exports = PlayerManager;
