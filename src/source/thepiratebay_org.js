@@ -1,17 +1,16 @@
 class Source {
   enabled = true
-  src = "https://btdb.eu/search/__keyword__/0/"
+  src = "https://thepiratebay-caryyu.herokuapp.com/search/__keyword__"
 
   async execute(keyword) {
     if (keyword.length <= 0) return []
 
     var url = this.src.replace('__keyword__', keyword)
     url = encodeURI(url)
-    var data = await this._doRequest(url) 
+    var data = await this._doRequest(url)
 
-    var html = $.parseHTML(data.responseText);
-    var medias = $(html).find('.media')
-    return medias.map(i => this._fieldRef(medias[i])).get()
+    var medias = JSON.parse(data.responseText)
+    return medias.map(media => this._fieldRef(media))
   }
 
   _doRequest(url) {
@@ -19,7 +18,7 @@ class Source {
       GM_xmlhttpRequest({
         method: 'GET',
         url: url,
-        timeout: 10000,
+        timeout: 30000,
         onabort: function (data) {
           reject(data)
         },
@@ -40,13 +39,20 @@ class Source {
     })
   }
 
-  _fieldRef (html) {
-    var title = $(html).find('.media-body .item-title a').text()
-    var info = $(html).find('.media-body .item-meta-info small')
-    var link = $(html).find('.media-right a:first').attr('href')
-    var size = /Size\s:\s(.+)/g.exec($(info[0]).text())[1]
-    var sd = /Seeders\s:\s(\d*)/g.exec($(info[2]).text())[1]
-    var lc = /Leechers\s:\s(\d*)/g.exec($(info[3]).text())[1]
+  _sizePretty(size) {
+    size = size / 1024 / 1024
+    if (size < 1024) {
+      return Math.ceil(size) + 'M'
+    }
+    return (size / 1024) + 'G'
+  }
+
+  _fieldRef(obj) {
+    var title = obj.title
+    var link = obj.magnet
+    var size = this._sizePretty(obj.size)
+    var sd = obj.seeds
+    var lc = obj.leeches
     return {title: title, link: link, sd: sd, lc: lc, size: size}
   }
 }

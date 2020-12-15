@@ -1,6 +1,6 @@
 class Source {
   enabled = true
-  src = "https://btdb.eu/search/__keyword__/0/"
+  src = "http://kat.rip/usearch/__keyword__/"
 
   async execute(keyword) {
     if (keyword.length <= 0) return []
@@ -10,7 +10,7 @@ class Source {
     var data = await this._doRequest(url) 
 
     var html = $.parseHTML(data.responseText);
-    var medias = $(html).find('.media')
+    var medias = $(html).find('.mainpart .data .even, .odd')
     return medias.map(i => this._fieldRef(medias[i])).get()
   }
 
@@ -41,12 +41,12 @@ class Source {
   }
 
   _fieldRef (html) {
-    var title = $(html).find('.media-body .item-title a').text()
-    var info = $(html).find('.media-body .item-meta-info small')
-    var link = $(html).find('.media-right a:first').attr('href')
-    var size = /Size\s:\s(.+)/g.exec($(info[0]).text())[1]
-    var sd = /Seeders\s:\s(\d*)/g.exec($(info[2]).text())[1]
-    var lc = /Leechers\s:\s(\d*)/g.exec($(info[3]).text())[1]
+    var tds = $(html).find('td')
+    var title = tds.find('.torrentname .cellMainLink').text()
+    var link = tds.find('.floatright a:last').attr('href')
+    var size = $(tds[1]).text()
+    var sd = $(tds[4]).text()
+    var lc = $(tds[5]).text()
     return {title: title, link: link, sd: sd, lc: lc, size: size}
   }
 }
