@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "browserify index.js -o dist/bundle-all.js --debug"
+    "build": "browserify index.js -o dist/bundle-all.js",
+    "watch": "watchify index.js -o dist/bundle-all.js"
   },
   "repository": {
     "type": "git",
@@ -18,7 +19,8 @@
   },
   "homepage": "https://github.com/caryyu/bteye#readme",
   "devDependencies": {
-    "browserify": "^17.0.0"
+    "browserify": "^17.0.0",
+    "watchify": "^3.11.1"
   },
   "dependencies": {
     "dplayer": "^1.26.0",

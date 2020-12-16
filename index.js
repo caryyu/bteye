@@ -1,6 +1,3 @@
-//const Douban = require('./src/douban/main')
-//Douban()
-
 const configs = [{
   weight: 300,
   source: require('./src/source/btdb_eu'),
@@ -54,12 +51,15 @@ Promise.main = async function (configs) {
     var items = ''
 
     if (!data || data.length <= 0) {
-      items = '[btdb.eu] No any magnet links can be found!'
+      items = `[${s.src}] No any magnet links can be found!`
     } else {
       data.forEach(item => {
         let {title, size, sd, lc, link} = item
-        items += `<li><a href="javascript:void(0)" link="${link}">[Play]</a> <a href="${link}">${title} (sd: ${sd}, lc: ${lc}, ${size})</a></li>`
+        //items += `<li><a href="javascript:void(0)" link="${link}">[Play]</a> <a href="${link}">${title} (sd: ${sd}, lc: ${lc}, ${size})</a></li>`
+        items += `<li><a href="${link}">${title} (sd: ${sd}, lc: ${lc}, ${size})</a></li>`
       })
+      // loop break
+      i = configs.length - 1
     }
 
     var layer = $(`<div class="clearfix magnet-section" style="float: left; width: 675px"><hr/><ul>${items}</ul></div>`)
