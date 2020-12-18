@@ -1,5 +1,7 @@
 class Source {
+  weight = 300
   enabled = true
+  site = "btdb.eu"
   src = "https://btdb.eu/search/__keyword__/0/"
 
   async execute(keyword) {
@@ -12,6 +14,12 @@ class Source {
     var html = $.parseHTML(data.responseText);
     var medias = $(html).find('.media')
     return medias.map(i => this._fieldRef(medias[i])).get()
+  }
+
+  filterKeyword(keyword) {
+    var txt = keyword
+    txt = txt.replace(/Season\s/, 'S')
+    return txt
   }
 
   _doRequest(url) {

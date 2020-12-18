@@ -1,5 +1,7 @@
 class Source {
+  weight = 100
   enabled = true
+  site = "herokuapp.com"
   src = "https://stark-savannah-51602.herokuapp.com/search/__keyword__"
 
   async execute(keyword) {
@@ -11,6 +13,13 @@ class Source {
 
     var medias = JSON.parse(data.responseText)
     return medias.map(media => this._fieldRef(media))
+  }
+
+  filterKeyword(keyword) {
+    var txt = keyword
+    txt = txt.replace(/^[^a-zA-Z]*/, "")
+    txt = txt.replace(/Season\s/, "S")
+    return txt
   }
 
   _doRequest(url) {

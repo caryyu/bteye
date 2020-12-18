@@ -1,5 +1,7 @@
 class Source {
+  weight = 200
   enabled = true
+  site = "kat.rip"
   src = "http://kat.rip/usearch/__keyword__/"
 
   async execute(keyword) {
@@ -12,6 +14,12 @@ class Source {
     var html = $.parseHTML(data.responseText);
     var medias = $(html).find('.mainpart .data .even, .odd')
     return medias.map(i => this._fieldRef(medias[i])).get()
+  }
+
+  filterKeyword(keyword) {
+    var txt = keyword
+    txt = txt.replace(/Season\s/, 'S')
+    return txt
   }
 
   _doRequest(url) {

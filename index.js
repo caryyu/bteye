@@ -1,48 +1,24 @@
-const configs = [{
-  weight: 300,
-  source: require('./src/source/btdb_eu'),
-  getKeyword: function () {
-    var txt = $('h1 span:eq(0)').text()
-    txt = txt.replace(/Season\s/, 'S')
-    return txt
-  },
-}, {
-  weight: 200,
-  source: require('./src/source/kat_rip'),
-  getKeyword: function () {
-    var txt = $('h1 span:eq(0)').text()
-    txt = txt.replace(/Season\s/, "S")
-    return txt
-  }
-}, {
-  weight: 100,
-  source: require('./src/source/thepiratebay_org'),
-  getKeyword: function () {
-    var txt = $('h1 span:eq(0)').text()
-    txt = txt.replace(/^[^a-zA-Z]*/, "")
-    txt = txt.replace(/Season\s/, "S")
-    return txt
-  }
-}]
+const configs = require('./src/source/')
 
 Promise.main = async function (configs) {
   configs.sort(function (a, b) {
     return a.weight - b.weight
   })
 
-  console.log(configs.length)
+  var keyword = $('h1 span:eq(0)').text()
+
   for (var i = 0; i < configs.length; i++) {
     var c = configs[i]
-    var s = new c.source()
+    var s = c
     
     if (!s.enabled) continue
 
-    var keyword = c.getKeyword()
-    if (keyword.length <= 0) continue
+    var k = c.filterKeyword(keyword)
+    if (k.length <= 0) continue
 
-    console.log(keyword)
+    console.log(k)
 
-    var data = await s.execute(keyword).catch(function (error) {
+    var data = await s.execute(k).catch(function (error) {
       console.log(error)
       var layer = $(`<div class="clearfix" style="float: left; width: 675px"><hr/><p>Seems like you're not using VPN</p></div>`)
       $('.article .subjectwrap:first').append(layer)
@@ -51,7 +27,7 @@ Promise.main = async function (configs) {
     var items = ''
 
     if (!data || data.length <= 0) {
-      items = `[${s.src}] No any magnet links can be found!`
+      items = `[${s.site}] No any magnet links can be found!`
     } else {
       data.forEach(item => {
         let {title, size, sd, lc, link} = item
