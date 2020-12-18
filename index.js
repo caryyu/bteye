@@ -3,7 +3,7 @@ const configs = [{
   source: require('./src/source/btdb_eu'),
   getKeyword: function () {
     var txt = $('h1 span:eq(0)').text()
-    txt = txt.replace(/Season\s/, "S")
+    txt = txt.replace(/Season\s/, 'S')
     return txt
   },
 }, {

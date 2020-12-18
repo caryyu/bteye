@@ -4,7 +4,7 @@ This project is a tampermonkey-based plugin that aims to aggregate the internet 
 
 > Welcome leave your feedback on the Github issue area
 
-![IMG](poster.png)
+![IMG](https://github.com/caryyu/bteye/raw/master/poster.png)
 
 # Copyright Claim
 
