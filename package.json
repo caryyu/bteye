@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "browserify index.js -o dist/bundle-all.js",
+    "build": "browserify index.js -o dist/bundle-all.js && cat dist/tampermonkey-metadata.js dist/bundle-all.js > dist/script.user.js",
     "watch": "watchify index.js -o dist/bundle-all.js"
   },
   "repository": {

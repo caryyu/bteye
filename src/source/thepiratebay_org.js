@@ -1,6 +1,6 @@
 class Source {
   enabled = true
-  src = "https://thepiratebay-caryyu.herokuapp.com/search/__keyword__"
+  src = "https://stark-savannah-51602.herokuapp.com/search/__keyword__"
 
   async execute(keyword) {
     if (keyword.length <= 0) return []
