@@ -4,7 +4,7 @@
   "description": "This project is a tampermonkey-based plugin that aims to aggregate the internet BitTorrent resources",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha test/all.test.js",
     "build": "browserify -p tinyify index.js -o dist/bundle-all.js -t babelify && cat dist/tampermonkey-metadata.js dist/bundle-all.js > dist/script.user.js",
     "watch": "watchify index.js -o dist/bundle-all.js"
   },
@@ -25,12 +25,17 @@
     "@babel/preset-env": "^7.12.11",
     "babelify": "^10.0.0",
     "browserify": "^17.0.0",
+    "chai": "^4.2.0",
+    "jquery": "^3.5.1",
+    "jsdom": "^16.4.0",
+    "mocha": "^8.2.1",
     "tinyify": "^3.0.0",
     "watchify": "^3.11.1"
   },
   "dependencies": {
     "dplayer": "^1.26.0",
     "magnet-uri": "^6.1.0",
+    "request": "^2.88.2",
     "webtorrent": "^0.112.0"
   },
   "babel": {
