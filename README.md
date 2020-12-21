@@ -6,7 +6,16 @@ This project is a tampermonkey-based plugin that aims to aggregate the internet 
 
 ![IMG](https://github.com/caryyu/bteye/raw/master/poster.png)
 
-# Copyright Claim
+## Supported Sites
+
+The following is the list of supported sites, please raise a PR if there's more out there, thanks.
+
+- thepiratebay.org
+- btdb.eu
+- kat.rip
+- 1337x.to 
+
+## Copyright Claim
 
 This project is only for studying, Any copyright violation is obliged under you control, please take serious use, thanks.
 

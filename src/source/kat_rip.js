@@ -2,7 +2,7 @@ class Source {
   weight = 200
   enabled = true
   site = "kat.rip"
-  src = "http://kat.rip/usearch/__keyword__/"
+  src = "https://kat.rip/usearch/__keyword__/"
 
   async execute(keyword) {
     if (keyword.length <= 0) return []
@@ -27,7 +27,7 @@ class Source {
       GM_xmlhttpRequest({
         method: 'GET',
         url: url,
-        timeout: 10000,
+        timeout: 15000,
         onabort: function (data) {
           reject(data)
         },

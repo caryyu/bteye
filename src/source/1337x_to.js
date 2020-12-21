@@ -54,8 +54,7 @@ class Source {
     return new Promise(function (resolve, reject) {
       req(url).then(data => {
         var html = data.responseText
-        //var href = $(html).find('.box-info,.torrent-detail-page div:last div:first ul:first li:first a').attr('href')
-        var href = $(html).find('.box-info,.torrent-detail-page div:last div:first ul:first li:first a').html()
+        var href = $(html).find('.box-info .no-top-radius div:first ul:first li:first a').attr('href')
         resolve(href)
       }).catch(error => reject(error))
     })
@@ -64,8 +63,8 @@ class Source {
   async _fieldRef (html) {
     var title = $(html).find('.coll-1,.name').text()
     var link = $(html).find('.coll-1 a:last').attr('href')
-    var size = $(html).find('.coll-4,.size').text()
-    var sd = $(html).find('.coll-2,.seeds').text()
+    var size = $(html).find('.coll-4').children().remove().end().text()
+    var sd = $(html).find('.coll-2').text()
     var lc = $(html).find('.coll-3,.leeches').text()
 
     link = await this._getMagnetLink(link)

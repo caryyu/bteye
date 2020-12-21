@@ -32,13 +32,12 @@ describe('Do kat.rip testing', function() {
   })
 })
 
-//describe('Do 1337x.to testing', function() {
-  //it('the result size should be greater than 0', async function() {
-    //this.timeout(30000)
-    //var keyword = 'mulan'
-    //var result = await new _1337x_to().execute(keyword)
-    //expect(result.length).to.be.greaterThan(0)
-    //console.log(result[0])
-  //})
-//})
+describe('Do 1337x.to testing', function() {
+  it('the result size should be greater than 0', async function() {
+    this.timeout(30000)
+    var keyword = 'mulan'
+    var result = await new _1337x_to().execute(keyword)
+    expect(result.length).to.be.greaterThan(0)
+  })
+})
 
