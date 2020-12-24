@@ -33,6 +33,7 @@
     "watchify": "^3.11.1"
   },
   "dependencies": {
+    "bencode": "^2.0.1",
     "dplayer": "^1.26.0",
     "magnet-uri": "^6.1.0",
     "request": "^2.88.2",
