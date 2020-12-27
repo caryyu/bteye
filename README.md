@@ -14,6 +14,7 @@ The following is the list of supported sites, please raise a PR if there's more 
 - btdb.eu
 - kat.rip
 - 1337x.to 
+- yts.mx
 
 ## Copyright Claim
 
