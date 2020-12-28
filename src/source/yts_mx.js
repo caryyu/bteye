@@ -72,33 +72,37 @@ class Source {
       return {title: title, link: link, sd: sd, lc: lc, size: size}
     }
     // the link is Torernt URI
-    var link = $(html).find('#movie-info p a:first').attr('href')
+    var torrents = $(html).find('#movie-info p a[rel="nofollow"]')
 
-    return new Promise(function (resolve, reject) {
-      GM_xmlhttpRequest({
-        method: 'GET',
-        url: link,
-        responseType: 'arraybuffer',
-        timeout: 10000,
-        onabort: function (data) {
-          reject(data)
-        },
-        onerror: function (data) {
-          reject(data)
-        },
-        ontimeout: function (data) {
-          reject(data)
-        },
-        onload: function (data) {
-          if (data.status === 200) {
-            var body = Buffer.from(data.response)
-            resolve(wrapResult(body))
-          } else {
+    return Promise.all(torrents.map((i, val) => {
+      var link = $(val).attr('href')
+      console.log(link)
+      return new Promise(function (resolve, reject) {
+        GM_xmlhttpRequest({
+          method: 'GET',
+          url: link,
+          responseType: 'arraybuffer',
+          timeout: 10000,
+          onabort: function (data) {
             reject(data)
+          },
+          onerror: function (data) {
+            reject(data)
+          },
+          ontimeout: function (data) {
+            reject(data)
+          },
+          onload: function (data) {
+            if (data.status === 200) {
+              var body = Buffer.from(data.response)
+              resolve(wrapResult(body))
+            } else {
+              reject(data)
+            }
           }
-        }
+        })
       })
-    })
+    }))
   }
 }
 
