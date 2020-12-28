@@ -35,6 +35,7 @@
   "dependencies": {
     "dplayer": "^1.26.0",
     "magnet-uri": "^6.1.0",
+    "parse-torrent": "^9.1.0",
     "request": "^2.88.2",
     "webtorrent": "^0.112.0"
   },
