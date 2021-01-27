@@ -76,7 +76,7 @@ class Source {
 
     return Promise.all(torrents.map((i, val) => {
       var link = $(val).attr('href')
-      console.log(link)
+
       return new Promise(function (resolve, reject) {
         GM_xmlhttpRequest({
           method: 'GET',
