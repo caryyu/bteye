@@ -1,6 +1,6 @@
 {
   "name": "bteye",
-  "version": "1.0.0",
+  "version": "0.0.6",
   "description": "This project is a tampermonkey-based plugin that aims to aggregate the internet BitTorrent resources",
   "main": "index.js",
   "scripts": {

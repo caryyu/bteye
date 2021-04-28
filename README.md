@@ -16,7 +16,7 @@ The following is the list of supported sites, please raise a PR if there's more 
 - 1337x.to 
 - yts.mx
 
-## Copyright Claim
+## Disclaimer
 
-This project is only for studying, Any copyright violation is obliged under you control, please take serious use, thanks.
+This project is only for studying, Any copyright violation has to bear accountability by yourself, please take serious use, thanks.
 
