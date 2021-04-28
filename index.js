@@ -55,6 +55,7 @@ Promise.main = async function (configs) {
   uiContainer
     .append('<ul></ul>').children("ul:last-child")
     .append(elements)
+
   //new PlayerManager().uiApply()
 }
 

@@ -6,6 +6,8 @@
 // @author       caryyu
 // @match        *://movie.douban.com/subject/*
 // @grant        GM_xmlhttpRequest
+// @grant        GM_setValue
+// @grant        GM_getValue
 // @connect      btdb.eu
 // @connect      kat.rip
 // @connect      herokuapp.com
