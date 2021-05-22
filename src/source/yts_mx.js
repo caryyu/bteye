@@ -16,13 +16,14 @@ class Source {
     var html = $.parseHTML(data.responseText);
     var items = $(html).find('.browse-content .container .row .browse-movie-wrap')
 
-    var medias = Promise.all(items.map(async (i, val)=> {
+    var medias = await Promise.all(items.map(async (i, val)=> {
       var link = $(val).find('.browse-movie-link').attr('href')
       var data = await this._doRequest(link)
       var html = data.responseText
       return await this._fieldRef(html)
     }).get())
-    return medias
+
+    return medias.flat()
   }
 
   filterKeyword(keyword) {
@@ -58,25 +59,29 @@ class Source {
     })
   }
 
-  _fieldRef(html) {
+  async _fieldRef(html) {
     var wrapResult = function (buffer) {
-      var result = parseTorrent(buffer)
-      var link = parseTorrent.toMagnetURI(result)
-      var title = result['name']
-      var size = result['length']
-      var sd = '-1'
-      var lc = '-1'
+      try {
+        var result = parseTorrent(buffer)
+        var link = parseTorrent.toMagnetURI(result)
+        var title = result['name']
+        var size = result['length']
+        var sd = '-1'
+        var lc = '-1'
 
-      title = title.split('\n').join(' ').trim()
-      size = parseFloat(size / 1024 / 1024).toFixed(0) + 'M'
-      return {title: title, link: link, sd: sd, lc: lc, size: size}
+        title = title.split('\n').join(' ').trim()
+        size = parseFloat(size / 1024 / 1024).toFixed(0) + 'M'
+        return {title: title, link: link, sd: sd, lc: lc, size: size}
+      } catch (e) {
+        return {}
+      }
     }
     // the link is Torernt URI
     var torrents = $(html).find('#movie-info p a[rel="nofollow"]')
 
-    return Promise.all(torrents.map((i, val) => {
+    var allSettledPromises = await Promise.allSettled(torrents.map((i, val) => {
       var link = $(val).attr('href')
-      console.log(link)
+      //console.log(link)
       return new Promise(function (resolve, reject) {
         GM_xmlhttpRequest({
           method: 'GET',
@@ -95,14 +100,17 @@ class Source {
           onload: function (data) {
             if (data.status === 200) {
               var body = Buffer.from(data.response)
-              resolve(wrapResult(body))
+              var r = wrapResult(body)
+              resolve(r)
             } else {
               reject(data)
             }
           }
         })
       })
-    }))
+    }).get())
+
+    return allSettledPromises.filter(p => p.status === 'fulfilled').map(p => p.value)
   }
 }
 
