@@ -1,8 +1,8 @@
 class Source {
   weight = 100
   enabled = true
-  site = "herokuapp.com"
-  src = "https://stark-savannah-51602.herokuapp.com/search/__keyword__"
+  site = "thepiratebay.org"
+  src = "https://thepiratebay10.org/search/__keyword__/1/99/200"
 
   async execute(keyword) {
     if (keyword.length <= 0) return []
@@ -11,8 +11,11 @@ class Source {
     url = encodeURI(url)
     var data = await this._doRequest(url)
 
-    var medias = JSON.parse(data.responseText)
-    return medias.map(media => this._fieldRef(media))
+    var html = $.parseHTML(data.responseText)
+    $(html).find('#searchResult tbody tr:last').remove()
+    var medias = $(html).find('#searchResult tbody tr')
+
+    return Promise.all(medias.map(i => this._fieldRef(medias[i])).get())
   }
 
   filterKeyword(keyword) {
@@ -48,20 +51,16 @@ class Source {
     })
   }
 
-  _sizePretty(size) {
-    size = size / 1024 / 1024
-    if (size < 1024) {
-      return Math.ceil(size) + 'M'
-    }
-    return (size / 1024) + 'G'
-  }
+  _fieldRef (html) {
+    var title = $(html).find('td:nth-child(2) .detName a').text()
+    var link = $(html).find('td:nth-child(2) a:nth-child(2)').attr('href')
+    var size = $(html).find('td:nth-child(2) .detDesc').children().remove().end().text()
+    var sd = $(html).find('td:nth-child(3)').text()
+    var lc = $(html).find('td:nth-child(4)').text()
 
-  _fieldRef(obj) {
-    var title = obj.title
-    var link = obj.magnet
-    var size = this._sizePretty(obj.size)
-    var sd = obj.seeds
-    var lc = obj.leeches
+    size = size.split(',')[1]
+    size = size.trim()
+    size = size.split(' ', 2)[1]
     return {title: title, link: link, sd: sd, lc: lc, size: size}
   }
 }
