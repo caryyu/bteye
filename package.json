@@ -2,10 +2,10 @@
   "name": "bteye",
   "version": "0.0.9",
   "description": "This project is a tampermonkey-based plugin that aims to aggregate the internet BitTorrent resources",
-  "main": "index.js",
+  "private": true,
   "scripts": {
     "test": "mocha test/all.test.js",
-    "build": "browserify -p tinyify index.js -o dist/bundle-all.js -t babelify && cat dist/tampermonkey-metadata.js dist/bundle-all.js > dist/script.user.js",
+    "build": "node browserify.config.js",
     "watch": "watchify index.js -o dist/bundle-all.js"
   },
   "repository": {
@@ -13,7 +13,7 @@
     "url": "git+https://github.com/caryyu/bteye.git"
   },
   "author": "caryyu",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/caryyu/bteye/issues"
   },
@@ -30,14 +30,10 @@
     "jsdom": "^16.4.0",
     "mocha": "^8.2.1",
     "tinyify": "^3.0.0",
-    "watchify": "^3.11.1"
-  },
-  "dependencies": {
-    "dplayer": "^1.26.0",
+    "watchify": "^3.11.1",
     "magnet-uri": "^6.1.0",
     "parse-torrent": "^9.1.0",
-    "request": "^2.88.2",
-    "webtorrent": "^0.112.0"
+    "request": "^2.88.2"
   },
   "babel": {
     "presets": [
