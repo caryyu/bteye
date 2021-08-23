@@ -1,4 +1,8 @@
-const configs = require('./src/source/')
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './src/App';
+
+const configs = require('./src/source/');
 
 Promise.query = async function(keyword, configs) {
   var uiContainer = $('.article .subjectwrap:first')
@@ -76,5 +80,11 @@ Promise.main = async function (configs) {
   Promise.query(keyword, configs)
 }
 
-Promise.main(configs)
+//Promise.main(configs)
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  $('<div/>').appendTo($('.article .subjectwrap:first'))[0]
+)
 

@@ -11,10 +11,9 @@ const b = browserify({
   plugin: [tinyify]
 })
 
-b.on('update', () => b.bundle().pipe(fs.createWriteStream(dist)))
+//b.on('update', () => b.bundle().pipe(fs.createWriteStream(dist)))
 b.transform("babelify", {
-  //presets: ["@babel/preset-env", "@babel/preset-react"],
-  presets: ["@babel/preset-env"],
+  presets: ["@babel/preset-env", "@babel/preset-react"],
   plugins: ["@babel/plugin-transform-runtime", "@babel/plugin-proposal-class-properties"]
 })
 b.bundle().pipe(fs.createWriteStream(dist))

@@ -5,8 +5,8 @@
   "private": true,
   "scripts": {
     "test": "mocha test/all.test.js",
-    "build": "node browserify.config.js",
-    "watch": "watchify index.js -o dist/bundle-all.js"
+    "build": "node browserify.build.js",
+    "watch": "node browserify.watch.js"
   },
   "repository": {
     "type": "git",
@@ -23,25 +23,19 @@
     "@babel/plugin-proposal-class-properties": "^7.12.1",
     "@babel/plugin-transform-runtime": "^7.12.10",
     "@babel/preset-env": "^7.12.11",
+    "@babel/preset-react": "^7.14.5",
     "babelify": "^10.0.0",
     "browserify": "^17.0.0",
     "chai": "^4.2.0",
     "jquery": "^3.5.1",
     "jsdom": "^16.4.0",
-    "mocha": "^8.2.1",
-    "tinyify": "^3.0.0",
-    "watchify": "^3.11.1",
     "magnet-uri": "^6.1.0",
+    "mocha": "^8.2.1",
     "parse-torrent": "^9.1.0",
-    "request": "^2.88.2"
-  },
-  "babel": {
-    "presets": [
-      "@babel/preset-env"
-    ],
-    "plugins": [
-      "@babel/plugin-transform-runtime",
-      "@babel/plugin-proposal-class-properties"
-    ]
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "request": "^2.88.2",
+    "tinyify": "^3.0.0",
+    "watchify": "^3.11.1"
   }
 }
