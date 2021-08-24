@@ -12,5 +12,5 @@
 // @connect      1337x.to
 // @connect      yts.mx
 // @include      *//movie.douban.com/subject/*
-// @require      https://cdn.jsdelivr.net/gh\/caryyu/bteye@master/dist/bundle-all.js
+// @require      https://cdn.jsdelivr.net/gh/caryyu/bteye@7b22f824cc8e659104eddb4d91049e81c967fc81/dist/bundle-all.js
 // ==/UserScript==

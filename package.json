@@ -5,8 +5,9 @@
   "private": true,
   "scripts": {
     "test": "mocha test/all.test.js",
-    "build": "node browserify.build.js",
-    "watch": "node browserify.watch.js"
+    "build": "browserify index.js -o dist/bundle.js -t babelify",
+    "build-min": "browserify index.js -o dist/bundle.js -t babelify -p tinyify",
+    "watch": "browserify index.js -o dist/bundle.js -t babelify -p watchify -v"
   },
   "repository": {
     "type": "git",
@@ -37,5 +38,11 @@
     "request": "^2.88.2",
     "tinyify": "^3.0.0",
     "watchify": "^3.11.1"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env", 
+      "@babel/preset-react"
+    ]
   }
 }
