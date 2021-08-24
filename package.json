@@ -7,7 +7,8 @@
     "test": "mocha test/all.test.js",
     "build": "browserify index.js -o dist/bundle.js -t babelify",
     "build-min": "browserify index.js -o dist/bundle.js -t babelify -p tinyify",
-    "watch": "browserify index.js -o dist/bundle.js -t babelify -p watchify -v"
+    "watch": "watchify index.js -o dist/bundle.js -t babelify -v",
+    "watch-windows": "watchify index.js -o /mnt/c/Users/caryyu/Downloads/bundle.js -t babelify -v"
   },
   "repository": {
     "type": "git",
@@ -28,6 +29,7 @@
     "babelify": "^10.0.0",
     "browserify": "^17.0.0",
     "chai": "^4.2.0",
+    "core-js": "3",
     "jquery": "^3.5.1",
     "jsdom": "^16.4.0",
     "magnet-uri": "^6.1.0",
@@ -41,7 +43,16 @@
   },
   "babel": {
     "presets": [
-      "@babel/preset-env", 
+      [
+        "@babel/preset-env",
+        {
+          "useBuiltIns": "usage",
+          "corejs": 3,
+          "targets": {
+            "chrome": "58"
+          }
+        }
+      ],
       "@babel/preset-react"
     ]
   }
