@@ -5,6 +5,7 @@ export default class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      loading: true,
       keyword: document.querySelector('h1 span').textContent,
       items: []
     }
@@ -15,7 +16,7 @@ export default class App extends React.Component {
   }
 
   async refreshData() {
-    this.setState({items:[]})
+    this.setState({items:[], loading: true})
     var keyword = this.state.keyword
     var elements = []
     for (var i = 0; i < configs.length; i++) {
@@ -40,7 +41,7 @@ export default class App extends React.Component {
       elements.push(data.map(i => Object.assign({site: s.site}, i)))
     }
 
-    if(elements.length > 0) this.setState({items: elements.flat()})
+    this.setState({items: elements.flat(), loading: false})
   }
 
   changeKeyword() {
@@ -62,8 +63,9 @@ export default class App extends React.Component {
     return (
       <div className="clearfix magnet-section" style={style.section}>
         {this.getUIToolBar}
-        {this.state.items.length <= 0 ? 
-          <span>[bteye-btdouban] Loading Loading Loading ...</span>
+        {this.state.loading ? <span>[bteye-btdouban] Loading Loading Loading ...</span> :
+          this.state.items.length <= 0 ? 
+          <span>[bteye-btdouban] Did not find any available media resources</span>
           :
           <ul> 
           {
@@ -84,7 +86,6 @@ export default class App extends React.Component {
 const style = {
   toolbar: {
     fontSize: "12px",
-    //font-style:
     fontWeight: "normal",
     marginBottom: "10px",
     borderBottom: "1px #cccccc dashed"
