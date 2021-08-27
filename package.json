@@ -2,18 +2,20 @@
   "name": "bteye",
   "version": "0.0.9",
   "description": "This project is a tampermonkey-based plugin that aims to aggregate the internet BitTorrent resources",
-  "main": "index.js",
+  "private": true,
   "scripts": {
     "test": "mocha test/all.test.js",
-    "build": "browserify -p tinyify index.js -o dist/bundle-all.js -t babelify && cat dist/tampermonkey-metadata.js dist/bundle-all.js > dist/script.user.js",
-    "watch": "watchify index.js -o dist/bundle-all.js"
+    "build": "browserify index.js -o dist/bundle.js -t babelify",
+    "build-min": "browserify index.js -o dist/bundle.js -t babelify -p tinyify",
+    "watch": "watchify index.js -o dist/bundle.js -t babelify -v",
+    "watch-windows": "watchify index.js -o /mnt/c/Users/caryyu/Downloads/bundle.js -t babelify -v"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/caryyu/bteye.git"
   },
   "author": "caryyu",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/caryyu/bteye/issues"
   },
@@ -23,29 +25,35 @@
     "@babel/plugin-proposal-class-properties": "^7.12.1",
     "@babel/plugin-transform-runtime": "^7.12.10",
     "@babel/preset-env": "^7.12.11",
+    "@babel/preset-react": "^7.14.5",
     "babelify": "^10.0.0",
     "browserify": "^17.0.0",
     "chai": "^4.2.0",
+    "core-js": "3",
     "jquery": "^3.5.1",
     "jsdom": "^16.4.0",
+    "magnet-uri": "^6.1.0",
     "mocha": "^8.2.1",
+    "parse-torrent": "^9.1.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "request": "^2.88.2",
     "tinyify": "^3.0.0",
     "watchify": "^3.11.1"
   },
-  "dependencies": {
-    "dplayer": "^1.26.0",
-    "magnet-uri": "^6.1.0",
-    "parse-torrent": "^9.1.0",
-    "request": "^2.88.2",
-    "webtorrent": "^0.112.0"
-  },
   "babel": {
     "presets": [
-      "@babel/preset-env"
-    ],
-    "plugins": [
-      "@babel/plugin-transform-runtime",
-      "@babel/plugin-proposal-class-properties"
+      [
+        "@babel/preset-env",
+        {
+          "useBuiltIns": "usage",
+          "corejs": 3,
+          "targets": {
+            "chrome": "58"
+          }
+        }
+      ],
+      "@babel/preset-react"
     ]
   }
 }
