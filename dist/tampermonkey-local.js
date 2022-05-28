@@ -11,5 +11,5 @@
 // @connect      herokuapp.com
 // @connect      1337x.to
 // @include      *//movie.douban.com/subject/*
-// @require      file:///Users/caryyu/Desktop/bteye/dist/bundle-all.js
+// @require      file:///Users/caryyu/Documents/bteye/dist/bundle-all.js
 // ==/UserScript==

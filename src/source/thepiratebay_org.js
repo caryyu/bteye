@@ -1,8 +1,8 @@
 class Source {
   weight = 100
   enabled = true
-  site = "thepiratebay.org"
-  src = "https://thepiratebay10.org/search/__keyword__/1/99/200"
+  site = "superbay.gq"
+  src = "https://superbay.gq/search/__keyword__/1/99/200"
 
   async execute(keyword) {
     if (keyword.length <= 0) return []

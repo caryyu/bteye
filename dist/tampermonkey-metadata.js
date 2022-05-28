@@ -8,7 +8,7 @@
 // @grant        GM_xmlhttpRequest
 // @connect      btdb.eu
 // @connect      kat.rip
-// @connect      thepiratebay10.org
+// @connect      superbay.gq
 // @connect      1337x.to
 // @connect      yts.mx
 // @include      *//movie.douban.com/subject/*
