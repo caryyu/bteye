@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         btdouban
-// @version      0.0.9
+// @version      0.1.0
 // @description  [Caution: Ensure using VPN] Gets Douban medias' BitTorrent resources
 // @namespace    https://github.com/caryyu/bteye
 // @author       caryyu
