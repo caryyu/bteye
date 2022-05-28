@@ -1,6 +1,7 @@
 // ==UserScript==
 // @name         btdouban
-// @version      0.0.9
+// @version      0.1.0
+// @license      MIT
 // @description  [Caution: Ensure using VPN] Gets Douban medias' BitTorrent resources
 // @namespace    https://github.com/caryyu/bteye
 // @author       caryyu
@@ -8,9 +9,9 @@
 // @grant        GM_xmlhttpRequest
 // @connect      btdb.eu
 // @connect      kat.rip
-// @connect      thepiratebay10.org
+// @connect      superbay.gq
 // @connect      1337x.to
 // @connect      yts.mx
 // @include      *//movie.douban.com/subject/*
-// @require      https://cdn.jsdelivr.net/gh/caryyu/bteye@7b22f824cc8e659104eddb4d91049e81c967fc81/dist/bundle-all.js
+// @require      https://cdn.jsdelivr.net/gh/caryyu/bteye@5bc958b5c38613ce90b7d3285501f16fe389c341/dist/bundle.js
 // ==/UserScript==
